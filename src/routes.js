@@ -8,16 +8,24 @@ const database = new Database()
 export const routes = [
     {
         method: 'GET',
-        path: buildRoutePath('/users'),
+        path: buildRoutePath('/tasks'),
         handler: (request, response) => {
-            const tasks = database.select('users', {
+
+            const { search } = request.query
+            /*
+                Verifica se a informacao passada como queryParams existe ou no title e description.
+
+                Caso exista em algum dos campos a informacao passado nos query params entao é valido. 
+                Se o que for passado no search for invalido, ele retorna um array vazio
+
+                Lembrando que ele so verifica se caso existir um search, que nada mais é que um query params
+                que esta sendo ou vai ser passado.
+            */
+            const tasks = database.select('tasks', search ? {
                 id,
-                title,
-                description,
-                completed_at,
-                created_at,
-                updated_at,
-            })
+                title: search,
+                description: search,
+            } : null)
             
             return response
                 .end(JSON.stringify(tasks))
@@ -25,7 +33,7 @@ export const routes = [
     },
     {
         method: 'POST',
-        path: buildRoutePath('/users'),
+        path: buildRoutePath('/tasks'),
         handler: (request, response) => {
             const { title, description } = request.body
 
@@ -58,7 +66,7 @@ export const routes = [
     },
     {
         method: 'PUT',
-        path: buildRoutePath('/users/:id'),
+        path: buildRoutePath('/tasks/:id'),
         handler: (request, response) => {
             const { id } = request.params
             const { title, description } = request.body
@@ -93,7 +101,7 @@ export const routes = [
     },
     {
         method: 'DELETE',
-        path: buildRoutePath ('/users/:id'),
+        path: buildRoutePath ('/tasks/:id'),
         handler: (request, response) => {
             const { id } = request.params
 
@@ -109,7 +117,7 @@ export const routes = [
     },
     {
         method: 'PATCH',
-        path: buildRoutePath ('/users/:id/complete'),
+        path: buildRoutePath ('/tasks/:id/complete'),
         handler: (request, response) => {
             const { id } = request.params
 

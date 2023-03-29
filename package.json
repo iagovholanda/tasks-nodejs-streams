@@ -8,5 +8,8 @@
   },
   "repository": "https://github.com/iagovholanda/tasks-nodejs-streams.git",
   "author": "Iago Holanda <iagogholanda@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "csv": "^6.2.8"
+  }
 }
