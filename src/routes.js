@@ -50,7 +50,7 @@ export const routes = [
             }
 
             const task = {
-                id: randomUUID,
+                id: randomUUID(),
                 title,
                 description,
                 completed_at: null,
@@ -83,7 +83,7 @@ export const routes = [
             /*
                 Vou procurar a tabela no qual eu desejo atualizar o registro.
             */
-            const [task] = database.select('tasks', { id })
+            const [task] = database.select('tasks', id )
 
 
             if(!task) {
@@ -105,7 +105,7 @@ export const routes = [
         handler: (request, response) => {
             const { id } = request.params
 
-            const [task] = database.select('tasks', { id })
+            const [task] = database.select('tasks',  id )
 
             if(!task) {
                 return response.writeHead(400).end()
@@ -121,7 +121,7 @@ export const routes = [
         handler: (request, response) => {
             const { id } = request.params
 
-            const [task] = database.select('tasks', { id })
+            const [task] = database.select('tasks',  id )
 
             if(!task) {
                 return response.writeHead(400).end()
